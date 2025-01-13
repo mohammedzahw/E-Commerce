@@ -1,6 +1,6 @@
 package com.example.e_commerce.model;
 
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Id;
 
 import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
