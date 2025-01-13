@@ -44,7 +44,7 @@ public class TokenUtil {
     @Value("${auth.secret}")
     private String TOKEN_SECRET;
 
-    public String generateToken(String email, Integer userId, Integer TOKEN_VALIDITY, String role) {
+    public String generateToken(String email, Long userId, Integer TOKEN_VALIDITY, String role) {
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", email);

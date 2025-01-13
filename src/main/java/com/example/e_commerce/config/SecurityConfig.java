@@ -23,13 +23,14 @@ import jakarta.servlet.http.HttpServletResponse;
 @SuppressWarnings("null")
 public class SecurityConfig {
 
-    private final UserDetailsServiceImpl userDetailsService;
-    private final VendorDetailsServiceImpl vendorDetailsService;
+    // private final UserDetailsServiceImpl userDetailsService;
+    // private final VendorDetailsServiceImpl vendorDetailsService;
 
-    public SecurityConfig(UserDetailsServiceImpl userDetailsService, VendorDetailsServiceImpl vendorDetailsService) {
-        this.userDetailsService = userDetailsService;
-        this.vendorDetailsService = vendorDetailsService;
-    }
+    // public SecurityConfig(UserDetailsServiceImpl userDetailsService,
+    // VendorDetailsServiceImpl vendorDetailsService) {
+    // this.userDetailsService = userDetailsService;
+    // this.vendorDetailsService = vendorDetailsService;
+    // }
 
     // @Bean
     // public AuthenticationManager authenticationManager(HttpSecurity http) throws

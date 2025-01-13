@@ -1,6 +1,5 @@
 package com.example.e_commerce.model;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -19,6 +18,7 @@ public class Vendor {
     private String name;
     private String email;
     private String password;
+    private boolean active;
     @OneToOne(fetch = FetchType.EAGER)
     private VendorImage vendorImage;
 }
