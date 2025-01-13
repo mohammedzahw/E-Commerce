@@ -2,6 +2,8 @@ package com.example.e_commerce.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,21 +23,27 @@ import jakarta.servlet.http.HttpServletResponse;
 @SuppressWarnings("null")
 public class SecurityConfig {
 
-    private UserRepository userRepository;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final VendorDetailsServiceImpl vendorDetailsService;
 
-    public SecurityConfig(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService, VendorDetailsServiceImpl vendorDetailsService) {
+        this.userDetailsService = userDetailsService;
+        this.vendorDetailsService = vendorDetailsService;
     }
 
-    /*****************************************************************************************************/
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-
-        return username -> userRepository.findByEmail(username)
-                .map(LocalUserDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
+    // @Bean
+    // public AuthenticationManager authenticationManager(HttpSecurity http) throws
+    // Exception {
+    // AuthenticationManagerBuilder authenticationManagerBuilder = http
+    // .getSharedObject(AuthenticationManagerBuilder.class);
+    // authenticationManagerBuilder
+    // .userDetailsService(userDetailsService)
+    // .passwordEncoder(passwordEncoder());
+    // authenticationManagerBuilder
+    // .userDetailsService(vendorDetailsService)
+    // .passwordEncoder(passwordEncoder());
+    // return authenticationManagerBuilder.build();
+    // }
 
     /*****************************************************************************************************/
     @Bean
@@ -44,31 +52,20 @@ public class SecurityConfig {
     }
 
     /***************************************************************************************************** */
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200")
-                        .allowedOriginPatterns("*")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
-            }
-        };
-    }
-
-    /***************************************************************************************************** */
-    @Bean
-    TokenUtil tokenUtil() {
-        return new TokenUtil();
-    }
-
-    @Bean
-    AuthFilter authFilter() {
-        return new AuthFilter(userDetailsService(), tokenUtil());
-    }
+    // @Bean
+    // public WebMvcConfigurer corsConfigurer() {
+    // return new WebMvcConfigurer() {
+    // @Override
+    // public void addCorsMappings(CorsRegistry registry) {
+    // registry.addMapping("/**")
+    // .allowedOrigins("http://localhost:4200")
+    // .allowedOriginPatterns("*")
+    // .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+    // .allowedHeaders("*")
+    // .allowCredentials(true);
+    // }
+    // };
+    // }
 
     /***************************************************************************************************** */
 
@@ -79,7 +76,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/**")
                 .permitAll()
-                .anyRequest().hasAnyRole("USER", "ADMIN", "INSTRUCTOR"));
+                .anyRequest().hasAnyRole("USER", "ADMIN", "VENDOR"));
         // .addFilterAfter(authFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.exceptionHandling(exceptionHandling -> exceptionHandling

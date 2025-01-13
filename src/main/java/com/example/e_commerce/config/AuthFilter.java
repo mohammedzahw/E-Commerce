@@ -2,6 +2,7 @@ package com.example.e_commerce.config;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
@@ -25,12 +26,15 @@ public class AuthFilter extends OncePerRequestFilter {
     @Value("${auth.header}")
     private String TOKEN_HEADER;
 
-    private final UserDetailsService userDetailsService;
-
+    private final UserDetailsServiceImpl userDetailsService;
+    private final VendorDetailsServiceImpl vendorDetailsService; // Change to VendorDetailsServiceImpl
     private final TokenUtil tokenUtil;
 
-    public AuthFilter(UserDetailsService userDetailsService, TokenUtil tokenUtil) {
+    @Autowired
+    public AuthFilter(UserDetailsServiceImpl userDetailsService, VendorDetailsServiceImpl vendorDetailsService,
+            TokenUtil tokenUtil) {
         this.userDetailsService = userDetailsService;
+        this.vendorDetailsService = vendorDetailsService; // Initialize it here
         this.tokenUtil = tokenUtil;
     }
 
@@ -50,13 +54,19 @@ public class AuthFilter extends OncePerRequestFilter {
         if (header != null && securityContext.getAuthentication() == null) {
 
             String token = header.substring("Bearer ".length());
-            String username = tokenUtil.getUserName(token);
+            String email = tokenUtil.getEmail(token);
+            String role = tokenUtil.getRole(token);
 
-            if (username != null) {
+            if (email != null) {
                 try {
 
-                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                    UserDetails userDetails = null;
 
+                    if ("ROLE_USER".equals(role)) {
+                        userDetails = userDetailsService.loadUserByUsername(email);
+                    } else if ("ROLE_VENDOR".equals(role)) {
+                        userDetails = vendorDetailsService.loadUserByUsername(email);
+                    }
                     if (userDetails != null) {
                         if (tokenUtil.isTokenValid(token, userDetails)) {
 

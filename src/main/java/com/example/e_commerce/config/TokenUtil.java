@@ -44,12 +44,13 @@ public class TokenUtil {
     @Value("${auth.secret}")
     private String TOKEN_SECRET;
 
-    public String generateToken(String userName, Integer userId, Integer TOKEN_VALIDITY) {
+    public String generateToken(String email, Integer userId, Integer TOKEN_VALIDITY, String role) {
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("userName", userName);
+        claims.put("email", email);
         claims.put("userId", userId);
         claims.put("created", new Date());
+        claims.put("role", role);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -58,14 +59,24 @@ public class TokenUtil {
     }
 
     /***************************************************************************************/
-    public String getUserName(String token) {
+    public String getEmail(String token) {
         if (token == null)
             return null;
 
         Claims claims = getClaims(token);
 
-        return claims.get("userName").toString();
+        return claims.get("email").toString();
 
+    }
+
+    /***************************************************************************************/
+    public String getRole(String token) {
+        if (token == null)
+            return null;
+
+        Claims claims = getClaims(token);
+
+        return claims.get("role").toString();
     }
 
     /***************************************************************************************/
@@ -111,9 +122,9 @@ public class TokenUtil {
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
 
-        String username = getUserName(token);
+        String email = getEmail(token);
 
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return (email.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
     /***************************************************************************************/
@@ -149,4 +160,5 @@ public class TokenUtil {
             throw new RuntimeException(ex.getMessage());
         }
     }
+
 }
