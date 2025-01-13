@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.e_commerce.dto.UserSignUpRequest;
 import com.example.e_commerce.model.Address;
+import com.example.e_commerce.model.Phone;
 import com.example.e_commerce.model.User;
 
 import lombok.Data;
@@ -23,15 +24,13 @@ public class UserMapper {
         user.setName(signUpRequest.getName());
         user.setPassword(signUpRequest.getPassword());
         user.setActive(false);
-        Address address = new Address();
-        address.setCity(signUpRequest.getCity());
-        address.setState(signUpRequest.getState());
-        address.setCountry(signUpRequest.getCountry());
-        address.setZipCode(signUpRequest.getZipCode());
-        address.setStreet(signUpRequest.getStreet());
-        address.setHouseNumber(signUpRequest.getHouseNumber());
+        Address address = new Address(signUpRequest);
         address.setUser(user);
+        Phone phone = new Phone();
+        phone.setPhone(signUpRequest.getPhone());
+        phone.setUser(user);
         user.setAddresses(List.of(address));
+        user.setPhones(List.of(phone));
 
         return user;
     }

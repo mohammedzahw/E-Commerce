@@ -18,7 +18,7 @@ public class Address {
     private String city;
     private String state;
     private String country;
-    private String zipCode;
+    private Integer zipCode;
     private String street;
     private String houseNumber;
     @ManyToOne(fetch = jakarta.persistence.FetchType.LAZY)

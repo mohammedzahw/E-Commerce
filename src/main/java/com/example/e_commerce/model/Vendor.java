@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Vendor {
+public class Vendor implements IUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -21,4 +21,5 @@ public class Vendor {
     private boolean active;
     @OneToOne(fetch = FetchType.EAGER)
     private VendorImage vendorImage;
+
 }

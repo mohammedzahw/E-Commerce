@@ -18,7 +18,7 @@ import lombok.ToString;
 @Entity
 @Data
 @Table(name = "users")
-public class User {
+public class User implements IUser {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;

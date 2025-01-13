@@ -1,0 +1,123 @@
+package com.example.e_commerce.service;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.example.e_commerce.config.TokenUtil;
+import com.example.e_commerce.dto.LoginRequest;
+import com.example.e_commerce.exception.CustomException;
+import com.example.e_commerce.model.IUser;
+import com.example.e_commerce.model.User;
+import com.example.e_commerce.repository.UserRepository;
+import com.example.e_commerce.repository.VendorRepository;
+
+import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
+
+@Service
+public class LoginService {
+
+    private UserRepository userRepository;
+    private VendorRepository vendorRepository;
+
+    private PasswordEncoder passwordEncoder;
+
+    private TokenUtil tokenUtil;
+
+    private SignUpService signUpService;
+
+    private EmailService emailService;
+
+    public LoginService(PasswordEncoder passwordEncoder, TokenUtil tokenUtil,
+            VendorRepository vendorRepository,
+            UserRepository userRepository,
+            SignUpService signUpService, EmailService emailService) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.tokenUtil = tokenUtil;
+        this.vendorRepository = vendorRepository;
+        this.signUpService = signUpService;
+        this.emailService = emailService;
+    }
+
+    /********************************************************************************* */
+    public String verifyLogin(LoginRequest loginRequest, HttpServletRequest request)
+            throws SQLException, IOException {
+        IUser user = null;
+        if (loginRequest.getRole().equals("ROLE_USER")) {
+            user = userRepository.findByEmail(loginRequest.getEmail())
+                    .orElseThrow(() -> new CustomException("User not found", HttpStatus.NOT_FOUND));
+        } else if (loginRequest.getRole().equals("ROLE_VENDOR")) {
+            user = vendorRepository.findByEmail(loginRequest.getEmail())
+                    .orElseThrow(() -> new CustomException("User not found", HttpStatus.NOT_FOUND));
+        } else {
+            throw new CustomException("Invalid role", HttpStatus.BAD_REQUEST);
+        }
+
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            throw new CustomException("Wrong Password!", HttpStatus.BAD_REQUEST);
+        }
+        if (!user.isActive()) {
+            String token = tokenUtil.generateToken(loginRequest.getEmail(), user.getId(), 1000, "ROLE_USER");
+            signUpService.sendRegistrationVerificationCode(loginRequest.getEmail(),
+                    request,
+                    token);
+            throw new CustomException("Please verify your email first, link sent to your email",
+                    HttpStatus.BAD_REQUEST);
+        }
+        String token = tokenUtil.generateToken(loginRequest.getEmail(), user.getId(), 3000000, loginRequest.getRole());
+
+        return token;
+
+    }
+
+    /********************************************************************************************************************/
+    // public void savePassword(String email, String password)
+    // throws SQLException, IOException, MessagingException {
+    // User user = userRepository.findByEmail(email)
+    // .orElseThrow(() -> new CustomException("User not found",
+    // HttpStatus.NOT_FOUND));
+
+    // user.setPassword(passwordEncoder.encode(password)); // encoded password);
+
+    // userRepository.save(user);
+
+    // }
+
+    /********************************************************************************************************************/
+
+    // public void sendResetpasswordEmail(String email, HttpServletRequest request,
+    // String token) {
+
+    // try {
+    // String url = "http://" + request.getServerName() + ":" +
+    // request.getServerPort() + request.getContextPath()
+    // + "/api/check-token/" + token;
+    // System.out.println("url : " + url);
+    // String subject = "Reset Password Verification";
+    // String senderName = "User Registration Portal Service";
+    // String content = "<p> Hi, " + email + ", </p>" +
+    // "<p>Thank you for registering with us," + "" +
+    // "Please, follow the link below to complete your registration.</p>" +
+    // "<a href=\"" + url + "\">Reset password</a>" +
+    // "<p> Thank you <br> Reset Password Portal Service";
+    // emailService.sendEmail(email, content, subject, senderName);
+
+    // // return new ResponseEntity<>("Please, check your email to reset your
+    // // password", HttpStatus.OK);
+    // } catch (Exception e) {
+    // throw new CustomException("Error while sending email",
+    // HttpStatus.BAD_REQUEST);
+
+    // }
+    // }
+
+    /********************************************************************************************************************/
+
+}

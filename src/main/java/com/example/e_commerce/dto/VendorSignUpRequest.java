@@ -25,7 +25,7 @@ public class VendorSignUpRequest {
     private String zipCode;
     private String street;
     private String houseNumber;
-
+    private Integer phone;
     private MultipartFile image;
 
 }
