@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
@@ -17,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @SuppressWarnings("null")
 @Slf4j
-
+@Component
 public class AuthFilter extends OncePerRequestFilter {
 
     @Value("${auth.header}")
@@ -55,6 +56,8 @@ public class AuthFilter extends OncePerRequestFilter {
             String token = header.substring("Bearer ".length());
             String email = tokenUtil.getEmail(token);
             String role = tokenUtil.getRole(token);
+            // System.out.println("email : " + email);
+            // System.out.println("role : " + role);
 
             if (email != null) {
                 try {
@@ -70,6 +73,7 @@ public class AuthFilter extends OncePerRequestFilter {
                     }
                     if (userDetails != null) {
                         if (tokenUtil.isTokenValid(token, userDetails)) {
+                            // System.out.println("userDetails : " + userDetails);
 
                             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                                     userDetails, null, userDetails.getAuthorities());

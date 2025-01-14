@@ -8,12 +8,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    private final AuthFilter authFilter;
+
+    public SecurityConfig(AuthFilter authFilter) {
+        this.authFilter = authFilter;
+    }
 
     // private final UserDetailsServiceImpl userDetailsService;
     // private final VendorDetailsServiceImpl vendorDetailsService;
@@ -62,16 +68,29 @@ public class SecurityConfig {
 
     /***************************************************************************************************** */
 
+    /******************************************************************************************************* */
+
     @SuppressWarnings("unused")
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable());
 
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/**")
+                .requestMatchers("/api/**",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/swagger-resources/**",
+                        "/swagger-ui.html",
+                        "/webjars/**")
                 .permitAll()
-                .anyRequest().hasAnyRole("USER", "ADMIN", "VENDOR"));
-        // .addFilterAfter(authFilter(), UsernamePasswordAuthenticationFilter.class);
+                .requestMatchers("/admin/**")
+                .hasRole("ADMIN")
+                .requestMatchers("/vendor/**")
+                .hasRole("VENDOR")
+                .requestMatchers("/user/**")
+                .hasRole("USER")
+                .anyRequest().hasAnyRole("USER", "ADMIN", "VENDOR"))
+                .addFilterAfter(authFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.exceptionHandling(exceptionHandling -> exceptionHandling
                 .authenticationEntryPoint((request, response, authException) -> {

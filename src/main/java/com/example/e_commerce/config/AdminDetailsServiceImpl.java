@@ -3,9 +3,11 @@ package com.example.e_commerce.config;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.example.e_commerce.repository.AdminRepository;
 
+@Service
 public class AdminDetailsServiceImpl implements UserDetailsService {
     private final AdminRepository adminRepository;
 

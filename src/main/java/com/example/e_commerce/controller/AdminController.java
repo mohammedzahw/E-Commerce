@@ -1,7 +1,6 @@
 package com.example.e_commerce.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,10 +22,10 @@ public class AdminController {
     }
 
     /*********************************************************************************************/
-    @GetMapping("/dashboard")
-    public String getDashboard() {
-        return "Admin Dashboard";
-    }
+    // @GetMapping("/dashboard")
+    // public String getDashboard() {
+    // return "Admin Dashboard";
+    // }
 
     /********************************************************************************************* */
     @PostMapping("/order/update")
