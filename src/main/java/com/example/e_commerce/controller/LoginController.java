@@ -105,7 +105,6 @@ public class LoginController {
     }
 
     // /*************************************************************************************************************/
-    @SuppressWarnings("unused")
     @GetMapping("/check-token/{token}")
     public ResponseEntity<?> savePassword(@PathVariable("token") String token,
             HttpServletResponse response)

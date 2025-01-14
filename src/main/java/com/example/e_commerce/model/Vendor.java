@@ -19,7 +19,7 @@ public class Vendor implements IUser {
     private String email;
     private String password;
     private boolean active;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "vendor")
     private VendorImage vendorImage;
 
 }

@@ -17,9 +17,8 @@ public class VendorImage {
     @Id
     private String Id;
     private String url;
-    @OneToOne(mappedBy = "vendorImage", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @ToString.Exclude
-    @JsonIgnore
     private Vendor vendor;
 
     public VendorImage(ImageDto imageDto) {
