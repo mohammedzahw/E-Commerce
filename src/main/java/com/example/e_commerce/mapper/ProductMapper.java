@@ -3,7 +3,6 @@ package com.example.e_commerce.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.sql.Update;
 import org.springframework.stereotype.Component;
 
 import com.example.e_commerce.dto.CreateProductRequest;

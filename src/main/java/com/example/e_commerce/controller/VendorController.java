@@ -2,7 +2,6 @@ package com.example.e_commerce.controller;
 
 import java.io.IOException;
 
-import org.hibernate.sql.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,19 +16,21 @@ import com.example.e_commerce.Response;
 import com.example.e_commerce.dto.AddProductMedia;
 import com.example.e_commerce.dto.CreateProductRequest;
 import com.example.e_commerce.dto.UpdateProductRequest;
-import com.example.e_commerce.service.OrderService;
+import com.example.e_commerce.dto.UpdateProfileImage;
 import com.example.e_commerce.service.ProductService;
+import com.example.e_commerce.service.VendorService;
 
 @RequestMapping("/vendor")
 @RestController
 public class VendorController {
 
     private ProductService productService;
-    private OrderService orderService;
+    private VendorService vendorService;
 
-    public VendorController(ProductService productService, OrderService orderService) {
+    public VendorController(ProductService productService, VendorService vendorService) {
         this.productService = productService;
-        this.orderService = orderService;
+        this.vendorService = vendorService;
+
     }
 
     /****************************************************************************************************/
@@ -83,5 +84,12 @@ public class VendorController {
     }
 
     /****************************************************************************************************/
+
+    @GetMapping("/update-profile-image")
+    public Response updateProfile(@ModelAttribute UpdateProfileImage updateProfileImage) throws IOException {
+        vendorService.updateProfile(updateProfileImage);
+        return new Response(HttpStatus.OK, null, "Success");
+
+    }
 
 }

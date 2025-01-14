@@ -24,7 +24,7 @@ public class UserSignUpRequest {
     private String country;
     private Integer zipCode;
     private String street;
-    private String houseNumber;
+    private Integer houseNumber;
     private Integer phone;
     private MultipartFile image;
 

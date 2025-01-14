@@ -26,8 +26,6 @@ import jakarta.mail.MessagingException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 @Service
 public class SignUpService {
 

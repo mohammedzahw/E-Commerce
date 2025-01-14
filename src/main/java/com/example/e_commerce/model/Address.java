@@ -1,5 +1,6 @@
 package com.example.e_commerce.model;
 
+import com.example.e_commerce.dto.AddAddressRequest;
 import com.example.e_commerce.dto.UserSignUpRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,7 +25,7 @@ public class Address {
     private String country;
     private Integer zipCode;
     private String street;
-    private String houseNumber;
+    private Integer houseNumber;
     @ManyToOne(fetch = jakarta.persistence.FetchType.LAZY)
     @ToString.Exclude
     @JsonIgnore
@@ -37,6 +38,16 @@ public class Address {
         this.zipCode = signUpRequest.getZipCode();
         this.street = signUpRequest.getStreet();
         this.houseNumber = signUpRequest.getHouseNumber();
+    }
+
+    public Address(AddAddressRequest addAddressRequest, User user) {
+        this.city = addAddressRequest.getCity();
+        this.state = addAddressRequest.getState();
+        this.country = addAddressRequest.getCountry();
+        this.zipCode = addAddressRequest.getZipCode();
+        this.street = addAddressRequest.getStreet();
+        this.houseNumber = addAddressRequest.getHouseNumber();
+        this.user = user;
     }
 
 }

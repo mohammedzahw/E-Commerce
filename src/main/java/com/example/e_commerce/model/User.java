@@ -31,11 +31,11 @@ public class User implements IUser {
     @OneToOne(fetch = FetchType.EAGER)
     private UserImage userImage;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { jakarta.persistence.CascadeType.ALL })
     @JoinTable(name = "cart", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
     @ToString.Exclude
     private List<Product> cart;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { jakarta.persistence.CascadeType.ALL })
     @JoinTable(name = "wishlist", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
     @ToString.Exclude
     private List<Product> wishList;
@@ -47,5 +47,17 @@ public class User implements IUser {
     @OneToMany(fetch = FetchType.LAZY, cascade = { jakarta.persistence.CascadeType.ALL }, mappedBy = "user")
     @ToString.Exclude
     private List<Phone> phones;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = { jakarta.persistence.CascadeType.ALL }, mappedBy = "user")
+    @ToString.Exclude
+    private List<Notification> notifications;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = { jakarta.persistence.CascadeType.ALL }, mappedBy = "user")
+    @ToString.Exclude
+    private List<Payment> payments;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = { jakarta.persistence.CascadeType.ALL }, mappedBy = "user")
+    @ToString.Exclude
+    private List<Order> orders;
 
 }

@@ -1,8 +1,6 @@
 package com.example.e_commerce.service;
 
 import java.io.IOException;
-import java.security.PrivateKey;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +17,6 @@ import com.example.e_commerce.model.Product;
 import com.example.e_commerce.model.ProductImage;
 import com.example.e_commerce.model.ProductVideo;
 import com.example.e_commerce.repository.ProductRepository;
-import com.example.e_commerce.repository.VendorRepository;
 
 @Service
 public class ProductService {

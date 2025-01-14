@@ -2,18 +2,13 @@ package com.example.e_commerce.service;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.method.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.e_commerce.config.TokenUtil;
 import com.example.e_commerce.dto.LoginRequest;
 import com.example.e_commerce.exception.CustomException;
-import com.example.e_commerce.model.Admin;
 import com.example.e_commerce.model.IUser;
 import com.example.e_commerce.model.User;
 import com.example.e_commerce.model.Vendor;

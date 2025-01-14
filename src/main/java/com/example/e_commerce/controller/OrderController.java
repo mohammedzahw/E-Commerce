@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.e_commerce.Response;
 import com.example.e_commerce.service.OrderService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-
 @RestController
 public class OrderController {
     private OrderService orderService;

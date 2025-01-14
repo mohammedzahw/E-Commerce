@@ -9,6 +9,7 @@ import com.example.e_commerce.model.Category;
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
     public Optional<Category> findByName(String name);
 
+    @SuppressWarnings("null")
     public Optional<Category> findById(Integer id);
 
 }
