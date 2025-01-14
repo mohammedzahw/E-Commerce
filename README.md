@@ -30,26 +30,26 @@ This is a Spring Boot-based e-commerce application that provides functionalities
 - Maven
 - PostgreSQL
 - 
-API Documentation
+### API Documentation
   The application uses Swagger for API documentation. Once the application is running, you can access the Swagger UI at:
   http://localhost:9000/swagger-ui.html
 
-Endpoints
-Public Endpoints:
+### Endpoints
+# Public Endpoints:
   POST /api/signup/user - User registration
   POST /api/signup/vendor - Vendor registration
   POST /api/login - User login
-Admin Endpoints:
+# Admin Endpoints:
   GET /admin/products - Get all products
   POST /admin/products - Create a new product
   PUT /admin/products/{id} - Update a product
   DELETE /admin/products/{id} - Delete a product
-Vendor Endpoints:
+# Vendor Endpoints:
   GET /vendor/orders - Get all orders for the vendor
   POST /vendor/products - Create a new product
   PUT /vendor/products/{id} - Update a product
   DELETE /vendor/products/{id} - Delete a product
-User Endpoints:
+# User Endpoints:
   GET /user/cart - Get user's cart
   POST /user/cart - Add a product to the cart
   DELETE /user/cart/{productId} - Remove a product from the cart
