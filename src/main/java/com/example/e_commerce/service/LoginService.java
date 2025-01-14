@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.method.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import com.example.e_commerce.dto.LoginRequest;
 import com.example.e_commerce.exception.CustomException;
 import com.example.e_commerce.model.IUser;
 import com.example.e_commerce.model.User;
+import com.example.e_commerce.model.Vendor;
 import com.example.e_commerce.repository.UserRepository;
 import com.example.e_commerce.repository.VendorRepository;
 
@@ -78,45 +80,47 @@ public class LoginService {
     }
 
     /********************************************************************************************************************/
-    // public void savePassword(String email, String password)
-    // throws SQLException, IOException, MessagingException {
-    // User user = userRepository.findByEmail(email)
-    // .orElseThrow(() -> new CustomException("User not found",
-    // HttpStatus.NOT_FOUND));
+    public void savePassword(IUser user, String password)
+            throws SQLException, IOException, MessagingException {
+        if (user instanceof User) {
+            ((User) user).setPassword(passwordEncoder.encode(password));
+            userRepository.save((User) user);
+        } else if (user instanceof Vendor) {
+            ((Vendor) user).setPassword(passwordEncoder.encode(password));
+            vendorRepository.save((Vendor) user);
+        } else {
+            throw new CustomException("Invalid user", HttpStatus.BAD_REQUEST);
+        }
 
-    // user.setPassword(passwordEncoder.encode(password)); // encoded password);
-
-    // userRepository.save(user);
-
-    // }
+    }
 
     /********************************************************************************************************************/
 
-    // public void sendResetpasswordEmail(String email, HttpServletRequest request,
-    // String token) {
+    public void sendResetpasswordEmail(String email, HttpServletRequest request,
+            String token) {
 
-    // try {
-    // String url = "http://" + request.getServerName() + ":" +
-    // request.getServerPort() + request.getContextPath()
-    // + "/api/check-token/" + token;
-    // System.out.println("url : " + url);
-    // String subject = "Reset Password Verification";
-    // String senderName = "User Registration Portal Service";
-    // String content = "<p> Hi, " + email + ", </p>" +
-    // "<p>Thank you for registering with us," + "" +
-    // "Please, follow the link below to complete your registration.</p>" +
-    // "<a href=\"" + url + "\">Reset password</a>" +
-    // "<p> Thank you <br> Reset Password Portal Service";
-    // emailService.sendEmail(email, content, subject, senderName);
+        try {
+            String url = "http://" + request.getServerName() + ":" +
+                    request.getServerPort() + request.getContextPath()
+                    + "/check-token/" + token;
+            System.out.println("url : " + url);
+            String subject = "Reset Password Verification";
+            String senderName = "User Registration Portal Service";
+            String content = "<p> Hi, " + email + ", </p>" +
+                    "<p>Thank you for registering with us," + "" +
+                    "Please, follow the link below to complete your registration.</p>" +
+                    "<a href=\"" + url + "\">Reset password</a>" +
+                    "<p> Thank you <br> Reset Password Portal Service";
+            emailService.sendEmail(email, content, subject, senderName);
 
-    // // return new ResponseEntity<>("Please, check your email to reset your
-    // // password", HttpStatus.OK);
-    // } catch (Exception e) {
-    // throw new CustomException("Error while sending email",
-    // HttpStatus.BAD_REQUEST);
+            // return new ResponseEntity<>("Please, check your email to reset your
+            // password", HttpStatus.OK);
+        } catch (Exception e) {
+            throw new CustomException("Error while sending email",
+                    HttpStatus.BAD_REQUEST);
 
-    // }
-    // }
+        }
+    }
 
     /********************************************************************************************************************/
 

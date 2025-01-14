@@ -42,4 +42,8 @@ public class User implements IUser {
     @ToString.Exclude
     private List<Address> addresses;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = { jakarta.persistence.CascadeType.ALL }, mappedBy = "user")
+    @ToString.Exclude
+    private List<Phone> phones;
+
 }

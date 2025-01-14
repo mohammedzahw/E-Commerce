@@ -1,5 +1,6 @@
 package com.example.e_commerce.model;
 
+import com.example.e_commerce.dto.UserSignUpRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -25,5 +26,14 @@ public class Address {
     @ToString.Exclude
     @JsonIgnore
     private User user;
+
+    public Address(UserSignUpRequest signUpRequest) {
+        this.city = signUpRequest.getCity();
+        this.state = signUpRequest.getState();
+        this.country = signUpRequest.getCountry();
+        this.zipCode = signUpRequest.getZipCode();
+        this.street = signUpRequest.getStreet();
+        this.houseNumber = signUpRequest.getHouseNumber();
+    }
 
 }
