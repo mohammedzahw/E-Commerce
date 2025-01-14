@@ -32,29 +32,30 @@ This is a Spring Boot-based e-commerce application that provides functionalities
 - 
 ### API Documentation
   The application uses Swagger for API documentation. Once the application is running, you can access the Swagger UI at:
-  http://localhost:9000/swagger-ui.html
+  -http://localhost:9000/swagger-ui.html
 
 ### Endpoints
+
 # Public Endpoints:
-  POST /api/signup/user - User registration
-  POST /api/signup/vendor - Vendor registration
-  POST /api/login - User login
+  -POST /api/signup/user - User registration
+  -POST /api/signup/vendor - Vendor registration
+  -POST /api/login - User login
 # Admin Endpoints:
-  GET /admin/products - Get all products
-  POST /admin/products - Create a new product
-  PUT /admin/products/{id} - Update a product
-  DELETE /admin/products/{id} - Delete a product
+  -GET /admin/products - Get all products
+  -POST /admin/products - Create a new product
+  -PUT /admin/products/{id} - Update a product
+  -DELETE /admin/products/{id} - Delete a product
 # Vendor Endpoints:
-  GET /vendor/orders - Get all orders for the vendor
-  POST /vendor/products - Create a new product
-  PUT /vendor/products/{id} - Update a product
-  DELETE /vendor/products/{id} - Delete a product
+  -GET /vendor/orders - Get all orders for the vendor
+  -POST /vendor/products - Create a new product
+  -PUT /vendor/products/{id} - Update a product
+  -DELETE /vendor/products/{id} - Delete a product
 # User Endpoints:
-  GET /user/cart - Get user's cart
-  POST /user/cart - Add a product to the cart
-  DELETE /user/cart/{productId} - Remove a product from the cart
-  GET /user/wishlist - Get user's wishlist
-  POST /user/wishlist - Add a product to the wishlist
-  DELETE /user/wishlist/{productId} - Remove a product from the wishlist
-  POST /user/orders - Create a new order
+  -GET /user/cart - Get user's cart
+  -POST /user/cart - Add a product to the cart
+  -DELETE /user/cart/{productId} - Remove a product from the cart
+  -GET /user/wishlist - Get user's wishlist
+  -POST /user/wishlist - Add a product to the wishlist
+  -DELETE /user/wishlist/{productId} - Remove a product from the wishlist
+  -POST /user/orders - Create a new order
 
