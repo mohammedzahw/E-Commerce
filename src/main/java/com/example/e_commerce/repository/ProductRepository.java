@@ -18,6 +18,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Optional<Product> findById(Long id);
 
     /***************************************************************************** */
+    @Query("select case when count(p) > 0 then true else false end from Product p where p.id = :productId")
+    boolean existsById(@Param("productId") Long productId);
+
+    /****************************************************************************** */
 
     @Query("select case when count(p) > 0 then true else false end from Product p where p.vendor.id = :vendorId and p.id = :productId")
     boolean isVendorProductOwner(@Param("vendorId") Integer vendorId, @Param("productId") Long productId);

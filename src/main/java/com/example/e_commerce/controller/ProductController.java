@@ -23,5 +23,12 @@ public class ProductController {
             @PathVariable("page") int page) {
         return new Response(HttpStatus.OK, productService.getProductsByCategory(catId, page), "Success");
     }
+
+    /****************************************************************************************************/
+
+    @GetMapping("/product/{productId}")
+    public Response getProduct(@PathVariable("productId") Long productId) {
+        return new Response(HttpStatus.OK, productService.getProduct(productId), "Success");
+    }
     /****************************************************************************************************/
 }

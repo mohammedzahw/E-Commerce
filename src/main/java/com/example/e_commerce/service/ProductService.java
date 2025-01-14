@@ -18,11 +18,8 @@ import com.example.e_commerce.mapper.ProductMapper;
 import com.example.e_commerce.model.Product;
 import com.example.e_commerce.model.ProductImage;
 import com.example.e_commerce.model.ProductVideo;
-import com.example.e_commerce.model.Vendor;
 import com.example.e_commerce.repository.ProductRepository;
 import com.example.e_commerce.repository.VendorRepository;
-
-import ch.qos.logback.core.subst.Token;
 
 @Service
 public class ProductService {
@@ -31,12 +28,11 @@ public class ProductService {
     private ProductMapper productMapper;
     private MediaService mediaService;
     private TokenUtil tokenUtil;
-    private VendorRepository vendorRepository;
 
-    public ProductService(ProductRepository productRepository, VendorRepository vendorRepository, TokenUtil tokenUtil,
+    public ProductService(ProductRepository productRepository, TokenUtil tokenUtil,
             MediaService mediaService, ProductMapper productMapper) {
         this.productRepository = productRepository;
-        this.vendorRepository = vendorRepository;
+        ;
         this.tokenUtil = tokenUtil;
         this.productMapper = productMapper;
         this.mediaService = mediaService;
@@ -128,6 +124,10 @@ public class ProductService {
         mediaService.deleteByFolder("product" + product.getId());
 
         productRepository.delete(product);
+    }
+
+    public Product getProduct(Long productId) {
+        return productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
 }
