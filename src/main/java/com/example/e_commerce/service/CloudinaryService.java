@@ -37,7 +37,7 @@ public class CloudinaryService {
             Map result = cloudinary.uploader().upload(fileBytes,
                     ObjectUtils.asMap(
                             "resource_type", "auto",
-                            "folder", "chat/" + folder,
+                            "folder", "e-commerce/" + folder,
                             // "tags", "chat",
                             "invalidate", true // Optional: Invalidate the cached resources
                     ));
@@ -66,19 +66,19 @@ public class CloudinaryService {
         cloudinary.api().deleteAllResources(
                 ObjectUtils.asMap(
                         "type", "upload",
-                        "prefix", "chat/" + folder,
+                        "prefix", "e-commerce/" + folder,
                         "resource_type", "image"));
         cloudinary.api().deleteAllResources(
                 ObjectUtils.asMap(
                         "type", "upload",
-                        "prefix", "chat/" + folder,
+                        "prefix", "e-commerce/" + folder,
                         "resource_type", "video"));
         cloudinary.api().deleteAllResources(
                 ObjectUtils.asMap(
                         "type", "upload",
-                        "prefix", "chat/" + folder,
+                        "prefix", "e-commerce/" + folder,
                         "resource_type", "raw"));
-        cloudinary.api().deleteFolder(folder, ObjectUtils.emptyMap());
+        cloudinary.api().deleteFolder("e-commerce/" + folder, ObjectUtils.emptyMap());
         return null;
     }
 

@@ -84,8 +84,17 @@ public class LoginController {
             return Validator.validate(result);
         }
 
-        User user = userRepository.findByEmail(changePasswordRequest.getEmail()).orElseThrow(
-                () -> new CustomException("User not found", HttpStatus.NOT_FOUND));
+        IUser user = null;
+        if (changePasswordRequest.getRole().equals("ROLE_USER")) {
+            user = userRepository.findByEmail(changePasswordRequest.getEmail()).orElseThrow(
+                    () -> new CustomException("User not found", HttpStatus.NOT_FOUND));
+        } else if (changePasswordRequest.getRole().equals("ROLE_VENDOR")) {
+            user = vendorRepository.findByEmail(changePasswordRequest.getEmail()).orElseThrow(
+                    () -> new CustomException("Vendor not found", HttpStatus.NOT_FOUND));
+        } else {
+            throw new CustomException("Invalid token", HttpStatus.BAD_REQUEST);
+        }
+
         if (!user.isActive()) {
             signUpService.sendRegistrationVerificationCode(changePasswordRequest.getEmail(),
                     request,

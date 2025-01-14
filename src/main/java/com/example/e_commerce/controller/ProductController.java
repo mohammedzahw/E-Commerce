@@ -17,12 +17,6 @@ public class ProductController {
     }
 
     /****************************************************************************************************/
-    @GetMapping("/products/{vendorId}")
-    public Response getProducts(@PathVariable("vendorId") Long vendorId) {
-        return new Response(HttpStatus.OK, productService.getProductsByVendor(vendorId), "Success");
-    }
-
-    /****************************************************************************************************/
 
     @GetMapping("/products/{catId}/{page}")
     public Response getProducts(@PathVariable("catId") Long catId,

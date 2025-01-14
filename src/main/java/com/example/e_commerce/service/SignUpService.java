@@ -8,11 +8,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import com.example.e_commerce.config.TokenUtil;
-import com.example.e_commerce.dto.ImageDto;
+import com.example.e_commerce.dto.MediaDto;
 import com.example.e_commerce.dto.UserSignUpRequest;
 import com.example.e_commerce.dto.VendorSignUpRequest;
 import com.example.e_commerce.exception.CustomException;
@@ -42,11 +39,11 @@ public class SignUpService {
     private UserRepository userRepository;
     private VendorRepository vendorRepository;
     private TokenUtil tokenUtil;
-    private ImageService imageService;
+    private MediaService mediaService;
 
     public SignUpService(EmailService emailService, UserMapper userMapper,
             PasswordEncoder passwordEncoder, TokenUtil tokenUtil,
-            ImageService imageService,
+            MediaService mediaService,
             UserRepository userRepository,
             VendorMapper vendorMapper,
             VendorRepository vendorRepository) {
@@ -57,7 +54,7 @@ public class SignUpService {
         this.userRepository = userRepository;
         this.vendorRepository = vendorRepository;
         this.tokenUtil = tokenUtil;
-        this.imageService = imageService;
+        this.mediaService = mediaService;
     }
 
     /******************************************************************************************************************/
@@ -70,7 +67,7 @@ public class SignUpService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
 
             if (request.getImage() != null) {
-                ImageDto imageDto = imageService.uploadImage(request.getImage(), null);
+                MediaDto imageDto = mediaService.uploadImage(request.getImage(), null, "user" + user.getId());
                 UserImage userImage = new UserImage(imageDto);
                 user.setUserImage(userImage);
             }
@@ -98,7 +95,7 @@ public class SignUpService {
             vendor.setPassword(passwordEncoder.encode(vendor.getPassword()));
 
             if (request.getImage() != null) {
-                ImageDto imageDto = imageService.uploadImage(request.getImage(), null);
+                MediaDto imageDto = mediaService.uploadImage(request.getImage(), null, "vendor" + vendor.getId());
                 VendorImage vendorImage = new VendorImage(imageDto);
                 vendor.setVendorImage(vendorImage);
             }

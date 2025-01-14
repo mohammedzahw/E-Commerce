@@ -1,6 +1,6 @@
 package com.example.e_commerce.model;
 
-import com.example.e_commerce.dto.ImageDto;
+import com.example.e_commerce.dto.MediaDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -24,7 +24,7 @@ public class UserImage {
     @JsonIgnore
     private User user;
 
-    public UserImage(ImageDto imageDto) {
+    public UserImage(MediaDto imageDto) {
         this.id = imageDto.getId();
         this.url = imageDto.getUrl();
 

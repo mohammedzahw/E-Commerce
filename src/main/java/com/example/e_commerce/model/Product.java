@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.ToString;
 
@@ -38,5 +39,15 @@ public class Product {
     @ToString.Exclude
     @JsonIgnore
     private List<Category> categories;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = { jakarta.persistence.CascadeType.ALL }, mappedBy = "product")
+    @ToString.Exclude
+    @JsonIgnore
+    private List<ProductImage> images;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = { jakarta.persistence.CascadeType.ALL }, mappedBy = "product")
+    @ToString.Exclude
+    @JsonIgnore
+    private List<ProductVideo> videos;
 
 }

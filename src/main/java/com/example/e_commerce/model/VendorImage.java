@@ -1,6 +1,6 @@
 package com.example.e_commerce.model;
 
-import com.example.e_commerce.dto.ImageDto;
+import com.example.e_commerce.dto.MediaDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -21,7 +21,7 @@ public class VendorImage {
     @ToString.Exclude
     private Vendor vendor;
 
-    public VendorImage(ImageDto imageDto) {
+    public VendorImage(MediaDto imageDto) {
         this.Id = imageDto.getId();
         this.url = imageDto.getUrl();
     }
