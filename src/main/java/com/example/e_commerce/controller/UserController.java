@@ -19,6 +19,13 @@ public class UserController {
     }
 
     /********************************************************************************************** */
+    @GetMapping("/cart")
+    public Response getCart() {
+        return new Response(HttpStatus.OK, userService.getCart(), "Success");
+    }
+
+    /********************************************************************************************** */
+
     @GetMapping("/add-to-cart/{productId}")
     public Response addToCart(@PathVariable("productId") Integer productId) {
         userService.addToCart(productId);
@@ -46,6 +53,12 @@ public class UserController {
     public Response addToWishList(@PathVariable("productId") Integer productId) {
         userService.addToWishList(productId);
         return new Response(HttpStatus.OK, null, "Success");
+    }
+
+    /************************************************************************************************ */
+    @GetMapping("/wishlist")
+    public Response getWishList() {
+        return new Response(HttpStatus.OK, userService.getWishList(), "Success");
     }
 
     /************************************************************************************************ */

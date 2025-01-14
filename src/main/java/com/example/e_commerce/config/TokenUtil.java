@@ -70,6 +70,12 @@ public class TokenUtil {
     }
 
     /***************************************************************************************/
+    public String getRole() {
+        String token = getTokenFromRequest();
+        return getRole(token);
+    }
+
+    /***************************************************************************************/
     public String getRole(String token) {
         if (token == null)
             return null;

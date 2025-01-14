@@ -1,16 +1,19 @@
 package com.example.e_commerce.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Id;
-
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.ToString;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor
 @Data
 public class Order {
     @Id
@@ -27,4 +30,17 @@ public class Order {
     @ToString.Exclude
     private User user;
 
+    @ManyToMany(fetch = jakarta.persistence.FetchType.LAZY)
+    @ToString.Exclude
+    private List<Product> products;
+
+    public Order(Address address, User user, List<Product> products) {
+        this.orderDate = LocalDateTime.now();
+        this.status = DileveryStatus.PENDING;
+        this.totalAmount = 0;
+        products.forEach(product -> this.totalAmount += product.getPrice());
+        this.address = address;
+        this.user = user;
+        this.products = products;
+    }
 }

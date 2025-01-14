@@ -12,4 +12,9 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
     @Query("select a from Admin a where a.name = :username")
     Optional<Admin> findByName(String username);
 
+    /****************************************************************************************************/
+    @Query("select case when count(a) > 0 then true else false end from Admin a where a.id = :id")
+    boolean exisexistsById(Integer id);
+    /****************************************************************************************************/
+
 }

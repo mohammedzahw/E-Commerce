@@ -10,8 +10,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.ToString;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor
 @Data
 public class Payment {
     @Id
@@ -29,5 +31,14 @@ public class Payment {
     @ManyToOne(fetch = jakarta.persistence.FetchType.LAZY)
     @ToString.Exclude
     private User user;
+
+    public Payment(String method, String currency, Order order, User user) {
+        this.method = method;
+        this.currency = currency;
+        this.order = order;
+        this.user = user;
+        this.date = LocalDateTime.now();
+        this.amount = order.getTotalAmount();
+    }
 
 }
