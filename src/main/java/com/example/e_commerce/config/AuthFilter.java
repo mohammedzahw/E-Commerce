@@ -27,12 +27,15 @@ public class AuthFilter extends OncePerRequestFilter {
     private String TOKEN_HEADER;
 
     private final UserDetailsServiceImpl userDetailsService;
-    private final VendorDetailsServiceImpl vendorDetailsService; // Change to VendorDetailsServiceImpl
+    private final VendorDetailsServiceImpl vendorDetailsService;
+    private final AdminDetailsServiceImpl adminDetailsService;
     private final TokenUtil tokenUtil;
 
     @Autowired
-    public AuthFilter(UserDetailsServiceImpl userDetailsService, VendorDetailsServiceImpl vendorDetailsService,
+    public AuthFilter(UserDetailsServiceImpl userDetailsService, AdminDetailsServiceImpl adminDetailsService,
+            VendorDetailsServiceImpl vendorDetailsService,
             TokenUtil tokenUtil) {
+        this.adminDetailsService = adminDetailsService;
         this.userDetailsService = userDetailsService;
         this.vendorDetailsService = vendorDetailsService; // Initialize it here
         this.tokenUtil = tokenUtil;
@@ -66,6 +69,8 @@ public class AuthFilter extends OncePerRequestFilter {
                         userDetails = userDetailsService.loadUserByUsername(email);
                     } else if ("ROLE_VENDOR".equals(role)) {
                         userDetails = vendorDetailsService.loadUserByUsername(email);
+                    } else if (role.equals("ROLE_ADMIN")) {
+                        userDetails = adminDetailsService.loadUserByUsername(email);
                     }
                     if (userDetails != null) {
                         if (tokenUtil.isTokenValid(token, userDetails)) {

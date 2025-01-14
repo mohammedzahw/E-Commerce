@@ -24,7 +24,7 @@ public class UserService {
 
     /*********************************************************************************************** */
 
-    public void addToCart(Long productId) {
+    public void addToCart(Integer productId) {
         User user = userRepository.findById(productId)
                 .orElseThrow(() -> new CustomException("User not found", HttpStatus.NOT_FOUND));
         if (productRepository.existsById(productId)) {
@@ -36,7 +36,7 @@ public class UserService {
 
     /*********************************************************************************************** */
 
-    public void removeFromCart(Long productId) {
+    public void removeFromCart(Integer productId) {
         User user = userRepository.findById(productId)
                 .orElseThrow(() -> new CustomException("User not found", HttpStatus.NOT_FOUND));
         userRepository.removeFromCart(user.getId(), productId);
@@ -50,7 +50,7 @@ public class UserService {
 
     /*********************************************************************************************** */
 
-    public void addToWishList(Long productId) {
+    public void addToWishList(Integer productId) {
         User user = userRepository.findById(productId)
                 .orElseThrow(() -> new CustomException("User not found", HttpStatus.NOT_FOUND));
         if (productRepository.existsById(productId)) {
@@ -61,7 +61,7 @@ public class UserService {
 
     /*********************************************************************************************** */
 
-    public void removeFromWishList(Long productId) {
+    public void removeFromWishList(Integer productId) {
         User user = userRepository.findById(productId)
                 .orElseThrow(() -> new CustomException("User not found", HttpStatus.NOT_FOUND));
         userRepository.removeFromWishList(user.getId(), productId);

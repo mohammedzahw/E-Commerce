@@ -15,7 +15,7 @@ import lombok.ToString;
 public class Order {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.SEQUENCE)
-    private Long id;
+    private Integer id;
     private LocalDateTime orderDate;
     private DileveryStatus status;
     private double totalAmount;

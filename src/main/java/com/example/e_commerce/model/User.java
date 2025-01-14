@@ -21,7 +21,7 @@ import lombok.ToString;
 public class User implements IUser {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private Integer id;
     private String name;
     private String email;
     private String password;

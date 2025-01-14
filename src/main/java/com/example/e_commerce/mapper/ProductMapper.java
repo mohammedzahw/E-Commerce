@@ -33,7 +33,7 @@ public class ProductMapper {
         product.setPrice(productDto.getPrice());
         product.setQuantity(productDto.getQuantity());
         List<Category> categories = new ArrayList<>();
-        for (Long catId : productDto.getCategories()) {
+        for (Integer catId : productDto.getCategories()) {
 
             Category category = categoryRepository.findById(catId).orElse(null);
             if (category != null) {
@@ -54,7 +54,7 @@ public class ProductMapper {
         product.setPrice(productDto.getPrice());
         product.setQuantity(productDto.getQuantity());
         List<Category> categories = new ArrayList<>();
-        for (Long catId : productDto.getCategories()) {
+        for (Integer catId : productDto.getCategories()) {
 
             Category category = categoryRepository.findById(catId).orElse(null);
             if (category != null) {

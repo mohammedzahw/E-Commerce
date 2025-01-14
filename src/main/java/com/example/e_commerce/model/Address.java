@@ -15,7 +15,7 @@ import lombok.ToString;
 public class Address {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.SEQUENCE)
-    private Long id;
+    private Integer id;
     private String city;
     private String state;
     private String country;

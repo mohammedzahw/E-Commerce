@@ -8,11 +8,11 @@ import com.example.e_commerce.model.Product;
 
 @Data
 public class CategoryProducts {
-    private Long id;
+    private Integer id;
     private String name;
     private List<Product> products;
 
-    public CategoryProducts(Long id, String name, List<Product> products) {
+    public CategoryProducts(Integer id, String name, List<Product> products) {
 
         this.id = id;
         this.name = name;

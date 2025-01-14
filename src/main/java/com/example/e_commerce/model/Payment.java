@@ -16,7 +16,7 @@ import lombok.ToString;
 public class Payment {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.SEQUENCE)
-    private Long id;
+    private Integer id;
     private String method;
     private LocalDateTime date;
     private double amount;

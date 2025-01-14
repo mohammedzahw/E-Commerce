@@ -10,5 +10,5 @@ public class CreateProductRequest {
     private String description;
     private double price;
     private int quantity;
-    private List<Long> categories;
+    private List<Integer> categories;
 }

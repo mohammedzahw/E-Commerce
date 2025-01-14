@@ -14,7 +14,7 @@ import lombok.ToString;
 public class Phone {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.SEQUENCE)
-    private Long id;
+    private Integer id;
     private int phone;
     @ManyToOne(fetch = jakarta.persistence.FetchType.LAZY)
     @ToString.Exclude

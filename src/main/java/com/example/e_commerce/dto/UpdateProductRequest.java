@@ -6,10 +6,10 @@ import lombok.Data;
 
 @Data
 public class UpdateProductRequest {
-    private Long id;
+    private Integer id;
     private String title;
     private String description;
     private double price;
     private int quantity;
-    private List<Long> categories;
+    private List<Integer> categories;
 }

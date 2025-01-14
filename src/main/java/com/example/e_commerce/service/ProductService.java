@@ -39,12 +39,12 @@ public class ProductService {
     }
 
     /********************************************************************************************** */
-    public List<Product> getProductsByCategory(Long catId, int page) {
+    public List<Product> getProductsByCategory(Integer catId, int page) {
         return productRepository.findProductsByCategoryId(catId, PageRequest.of(page, 10));
     }
 
     /********************************************************************************************** */
-    public List<Product> getProductsByVendor(Long vendorId) {
+    public List<Product> getProductsByVendor(Integer vendorId) {
         return productRepository.findProductsByVendorId(vendorId);
     }
 
@@ -111,7 +111,7 @@ public class ProductService {
      * @param productId
      * @throws Exception
      */
-    public void deleteProduct(Long productId) throws Exception {
+    public void deleteProduct(Integer productId) throws Exception {
         System.out.println("productId : " + productId);
         System.out.println("userId : " + tokenUtil.getUserId());
         if (!productRepository.isVendorProductOwner(tokenUtil.getUserId(), (productId))) {
@@ -126,8 +126,16 @@ public class ProductService {
         productRepository.delete(product);
     }
 
-    public Product getProduct(Long productId) {
+    /****************************************************************************************************** */
+    public Product getProduct(Integer productId) {
         return productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
     }
+
+    /****************************************************************************************************** */
+    public List<Product> searchProducts(String keyword) {
+
+        return productRepository.searchProducts(keyword);
+    }
+    /****************************************************************************************************** */
 
 }

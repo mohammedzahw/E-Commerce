@@ -1,6 +1,5 @@
 package com.example.e_commerce.repository;
 
-import java.lang.classfile.ClassFile.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,16 +14,16 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Optional<Product> findByTitle(String title);
 
     /***************************************************************************** */
-    Optional<Product> findById(Long id);
+    Optional<Product> findById(Integer id);
 
     /***************************************************************************** */
     @Query("select case when count(p) > 0 then true else false end from Product p where p.id = :productId")
-    boolean existsById(@Param("productId") Long productId);
+    boolean existsById(@Param("productId") Integer productId);
 
     /****************************************************************************** */
 
     @Query("select case when count(p) > 0 then true else false end from Product p where p.vendor.id = :vendorId and p.id = :productId")
-    boolean isVendorProductOwner(@Param("vendorId") Integer vendorId, @Param("productId") Long productId);
+    boolean isVendorProductOwner(@Param("vendorId") Integer vendorId, @Param("productId") Integer productId);
 
     /***************************************************************************** */
     @Query("""
@@ -32,7 +31,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             join p.categories c
             where c.id = :categoryId
             """)
-    public List<Product> findProductsByCategoryId(@Param("categoryId") Long categoryId, Pageable pageable);
+    public List<Product> findProductsByCategoryId(@Param("categoryId") Integer categoryId, Pageable pageable);
 
     /*********************************************************************************** */
 
@@ -41,6 +40,13 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
                 join p.vendor v
                 where v.id = :categoryId
             """)
-    public List<Product> findProductsByVendorId(@Param("categoryId") Long categoryId);
+    public List<Product> findProductsByVendorId(@Param("categoryId") Integer categoryId);
+
+    /*********************************************************************************** */
+
+    @Query("""
+            select p from Product p where p.title like %:keyword% or p.description like %:keyword%
+            """)
+    List<Product> searchProducts(String keyword);
 
 }

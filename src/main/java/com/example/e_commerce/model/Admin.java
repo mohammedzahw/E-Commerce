@@ -1,25 +1,27 @@
 package com.example.e_commerce.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import lombok.Data;
 
-@Entity
 @Data
-public class Vendor implements IUser {
-
+@Entity
+public class Admin implements IUser {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
     private String name;
-    private String email;
     private String password;
-    private boolean active;
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "vendor")
-    private VendorImage vendorImage;
 
+    @Override
+    public String getEmail() {
+        return this.name;
+    }
+
+    @Override
+    public boolean isActive() {
+        return true;
+    }
 }

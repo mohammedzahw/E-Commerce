@@ -16,7 +16,7 @@ public class Notification {
 
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.SEQUENCE)
-    private Long id;
+    private Integer id;
     private String message;
 
     @ManyToOne(fetch = jakarta.persistence.FetchType.LAZY)

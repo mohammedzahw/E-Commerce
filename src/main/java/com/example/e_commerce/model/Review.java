@@ -17,7 +17,7 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private Integer id;
     private String review;
     private int rating;
     @ManyToOne(fetch = FetchType.LAZY)

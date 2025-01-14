@@ -19,7 +19,7 @@ public class ProductController {
     /****************************************************************************************************/
 
     @GetMapping("/products/{catId}/{page}")
-    public Response getProducts(@PathVariable("catId") Long catId,
+    public Response getProducts(@PathVariable("catId") Integer catId,
             @PathVariable("page") int page) {
         return new Response(HttpStatus.OK, productService.getProductsByCategory(catId, page), "Success");
     }
@@ -27,8 +27,14 @@ public class ProductController {
     /****************************************************************************************************/
 
     @GetMapping("/product/{productId}")
-    public Response getProduct(@PathVariable("productId") Long productId) {
+    public Response getProduct(@PathVariable("productId") Integer productId) {
         return new Response(HttpStatus.OK, productService.getProduct(productId), "Success");
     }
+
     /****************************************************************************************************/
+    @GetMapping("/products/search/{keyword}")
+    public Response searchProducts(@PathVariable("keyword") String keyword) {
+        return new Response(HttpStatus.OK, productService.searchProducts(keyword), "Success");
+    }
+    /************************************************************************************************ */
 }

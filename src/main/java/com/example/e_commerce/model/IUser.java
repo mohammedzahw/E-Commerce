@@ -3,7 +3,7 @@ package com.example.e_commerce.model;
 public interface IUser {
     String getEmail();
 
-    Long getId();
+    Integer getId();
 
     String getPassword();
 

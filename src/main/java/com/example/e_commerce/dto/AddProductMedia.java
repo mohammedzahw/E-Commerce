@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class AddProductMedia {
 
-    Long productId;
+    Integer productId;
     List<MultipartFile> files;
 
 }

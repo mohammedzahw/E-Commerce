@@ -9,30 +9,30 @@ import org.springframework.data.repository.query.Param;
 
 import com.example.e_commerce.model.User;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByEmail(String email);
 
     /*************************************************************************************************** */
     @Modifying
     @Query(nativeQuery = true, value = "insert into cart(user_id, product_id) values(:id, :productId)")
-    void addToCart(Long id, Long productId);
+    void addToCart(Integer id, Integer productId);
 
     /*************************************************************************************************** */
 
     @Modifying
     @Query(nativeQuery = true, value = "delete from cart where user_id = :id and product_id = :productId")
-    void removeFromCart(Long id, Long productId);
+    void removeFromCart(Integer id, Integer productId);
 
     /***************************************************************************************************** */
     @Modifying
     @Query(nativeQuery = true, value = "insert into wishlist(user_id, product_id) values(:id, :productId)")
-    void addToWishList(Long id, Long productId);
+    void addToWishList(Integer id, Integer productId);
 
     /***************************************************************************************************** */
     @Modifying
     @Query(nativeQuery = true, value = "delete from wishlist where user_id = :id and product_id = :productId")
-    void removeFromWishList(Long id, Long productId);
+    void removeFromWishList(Integer id, Integer productId);
 
     /***************************************************************************************************** */
     @Modifying

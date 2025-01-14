@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 import com.example.e_commerce.config.TokenUtil;
 import com.example.e_commerce.dto.LoginRequest;
 import com.example.e_commerce.exception.CustomException;
+import com.example.e_commerce.model.Admin;
 import com.example.e_commerce.model.IUser;
 import com.example.e_commerce.model.User;
 import com.example.e_commerce.model.Vendor;
+import com.example.e_commerce.repository.AdminRepository;
 import com.example.e_commerce.repository.UserRepository;
 import com.example.e_commerce.repository.VendorRepository;
 
@@ -27,6 +29,7 @@ public class LoginService {
 
     private UserRepository userRepository;
     private VendorRepository vendorRepository;
+    private AdminRepository adminRepository;
 
     private PasswordEncoder passwordEncoder;
 
@@ -36,11 +39,12 @@ public class LoginService {
 
     private EmailService emailService;
 
-    public LoginService(PasswordEncoder passwordEncoder, TokenUtil tokenUtil,
+    public LoginService(PasswordEncoder passwordEncoder, AdminRepository adminRepository, TokenUtil tokenUtil,
             VendorRepository vendorRepository,
             UserRepository userRepository,
             SignUpService signUpService, EmailService emailService) {
         this.userRepository = userRepository;
+        this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenUtil = tokenUtil;
         this.vendorRepository = vendorRepository;
@@ -58,7 +62,12 @@ public class LoginService {
         } else if (loginRequest.getRole().equals("ROLE_VENDOR")) {
             user = vendorRepository.findByEmail(loginRequest.getEmail())
                     .orElseThrow(() -> new CustomException("User not found", HttpStatus.NOT_FOUND));
-        } else {
+        } else if (loginRequest.getRole().equals("ROLE_ADMIN")) {
+            user = adminRepository.findByName(loginRequest.getEmail())
+                    .orElseThrow(() -> new CustomException("User not found", HttpStatus.NOT_FOUND));
+        }
+
+        else {
             throw new CustomException("Invalid role", HttpStatus.BAD_REQUEST);
         }
 

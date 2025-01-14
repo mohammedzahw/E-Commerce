@@ -20,14 +20,14 @@ public class UserController {
 
     /********************************************************************************************** */
     @GetMapping("/add-to-cart/{productId}")
-    public Response addToCart(@PathVariable("productId") Long productId) {
+    public Response addToCart(@PathVariable("productId") Integer productId) {
         userService.addToCart(productId);
         return new Response(HttpStatus.OK, null, "Success");
     }
 
     /****************************************************************************************************/
     @GetMapping("/remove-from-cart/{productId}")
-    public Response removeFromCart(@PathVariable("productId") Long productId) {
+    public Response removeFromCart(@PathVariable("productId") Integer productId) {
         userService.removeFromCart(productId);
         return new Response(HttpStatus.OK, null, "Success");
     }
@@ -43,14 +43,14 @@ public class UserController {
     /************************************************************************************************ */
 
     @GetMapping("/add-to-wishlist/{productId}")
-    public Response addToWishList(@PathVariable("productId") Long productId) {
+    public Response addToWishList(@PathVariable("productId") Integer productId) {
         userService.addToWishList(productId);
         return new Response(HttpStatus.OK, null, "Success");
     }
 
     /************************************************************************************************ */
     @GetMapping("/remove-from-wishlist/{productId}")
-    public Response removeFromWishList(@PathVariable("productId") Long productId) {
+    public Response removeFromWishList(@PathVariable("productId") Integer productId) {
         userService.removeFromWishList(productId);
         return new Response(HttpStatus.OK, null, "Success");
     }

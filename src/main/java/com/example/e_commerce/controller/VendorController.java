@@ -17,6 +17,7 @@ import com.example.e_commerce.Response;
 import com.example.e_commerce.dto.AddProductMedia;
 import com.example.e_commerce.dto.CreateProductRequest;
 import com.example.e_commerce.dto.UpdateProductRequest;
+import com.example.e_commerce.service.OrderService;
 import com.example.e_commerce.service.ProductService;
 
 @RequestMapping("/vendor")
@@ -24,14 +25,16 @@ import com.example.e_commerce.service.ProductService;
 public class VendorController {
 
     private ProductService productService;
+    private OrderService orderService;
 
-    public VendorController(ProductService productService) {
+    public VendorController(ProductService productService, OrderService orderService) {
         this.productService = productService;
+        this.orderService = orderService;
     }
 
     /****************************************************************************************************/
     @GetMapping("/products/{vendorId}")
-    public Response getProducts(@PathVariable("vendorId") Long vendorId) {
+    public Response getProducts(@PathVariable("vendorId") Integer vendorId) {
         return new Response(HttpStatus.OK, productService.getProductsByVendor(vendorId), "Success");
     }
 
@@ -74,9 +77,11 @@ public class VendorController {
      * @throws Exception
      ************************************************************************************************/
     @DeleteMapping("/product/delete/{productId}")
-    public Response deleteProduct(@PathVariable("productId") Long productId) throws Exception {
+    public Response deleteProduct(@PathVariable("productId") Integer productId) throws Exception {
         productService.deleteProduct(productId);
         return new Response(HttpStatus.OK, null, "Success");
     }
+
+    /****************************************************************************************************/
 
 }

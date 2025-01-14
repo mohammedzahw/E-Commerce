@@ -11,7 +11,7 @@ import lombok.Data;
 public class Category {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.SEQUENCE)
-    private Long id;
+    private Integer id;
     private String name;
 
 }
